@@ -44,6 +44,8 @@ unsigned int nTargetSpacing = 3 * 60; 	// 3 mins
 unsigned int nStakeMinAge = 8 * 60 * 60; 	// 8 hours
 unsigned int nStakeMaxAge = 2 * 24 * 60 * 60;    // 48 hours
 unsigned int nModifierInterval = 10 * 60; // time to elapse before new modifier is computed
+int64_t nRewardCoinYear = MAX_MINT_PROOF_OF_STAKE;
+
 
 int nCoinbaseMaturity = 10;
 CBlockIndex* pindexGenesisBlock = NULL;
@@ -978,8 +980,6 @@ const int DAILY_BLOCKCOUNT =  480;
 // miner's coin stake reward based on coin age spent (coin-days)
 int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
 {
-    int64_t nRewardCoinYear = MAX_MINT_PROOF_OF_STAKE;
-        
     if (pindexBest->nHeight <= 1000)
         nRewardCoinYear = 0 * CENT;
     else if (pindexBest->nHeight <= 5000)
@@ -1047,8 +1047,10 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
         nRewardCoinYear = 365 * CENT;
     }
 	
-    int64_t nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
-    //int64_t nSubsidy = nCoinAge * nRewardCoinYear  * 33 / (365 * 33 + 8);
+	int64_t nSubsidy = nCoinAge * nRewardCoinYear  * 33 / (365 * 33 + 8);
+	
+	if (pindexBest->nHeight <= 4500)
+        nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
 
     if (fDebug && GetBoolArg("-printcreation"))
         printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nCoinAge);
@@ -2870,7 +2872,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         CAddress addrFrom;
         uint64_t nNonce = 1;
         vRecv >> pfrom->nVersion >> pfrom->nServices >> nTime >> addrMe;
-        if (pfrom->nVersion < MIN_PROTO_VERSION)
+        if (pfrom->nVersion < MIN_PROTO_VERSION || (nBestHeight >= 4500 && pfrom->nVersion < MIN_PEER_PROTO_VERSION))
         {
             // Since February 20, 2012, the protocol is initiated at version 209,
             // and earlier versions are no longer supported

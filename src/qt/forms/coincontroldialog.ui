@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
+    <width>1040</width>
     <height>500</height>
    </rect>
   </property>
@@ -141,7 +141,7 @@
           <enum>Qt::ActionsContextMenu</enum>
          </property>
          <property name="text">
-          <string notr="true">0.00 DRM</string>
+          <string notr="true">0.00 MONK</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -221,7 +221,7 @@
           <enum>Qt::ActionsContextMenu</enum>
          </property>
          <property name="text">
-          <string notr="true">0.00 DRM</string>
+          <string notr="true">0.00 MONK</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -307,7 +307,7 @@
           <enum>Qt::ActionsContextMenu</enum>
          </property>
          <property name="text">
-          <string notr="true">0.00 DRM</string>
+          <string notr="true">0.00 MONK</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -345,7 +345,7 @@
           <enum>Qt::ActionsContextMenu</enum>
          </property>
          <property name="text">
-          <string notr="true">0.00 DRM</string>
+          <string notr="true">0.00 MONK</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -379,7 +379,7 @@
         <height>41</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayoutPanel" stretch="0,0,0,0,0">
+      <layout class="QHBoxLayout" name="horizontalLayoutPanel" stretch="0,0,0,0,0,0,0">
        <property name="spacing">
         <number>14</number>
        </property>
@@ -425,6 +425,44 @@
          </property>
         </widget>
        </item>
+	   
+	   <item>
+        <widget class="QLabel" name="labelLocked">
+          <property name="text">
+            <string notr="true">(1 locked)</string>
+          </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButtonCustomCC">
+         <property name="text">
+          <string>Select Coins</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="QComboBoxFilterCoins"/>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEditCustomCC">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>50</width>
+           <height>0</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+	   
        <item>
         <spacer name="horizontalSpacer">
          <property name="orientation">
@@ -451,7 +489,7 @@
       <bool>false</bool>
      </property>
      <property name="columnCount">
-      <number>11</number>
+      <number>16</number>
      </property>
      <attribute name="headerShowSortIndicator" stdset="0">
       <bool>true</bool>
@@ -471,12 +509,40 @@
      </column>
      <column>
       <property name="text">
-       <string>Label</string>
+      <string>Confirmations</string>
+      </property>
+      <property name="toolTip">
+      <string>Confirmed</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Address</string>
+       <string>Age</string> /** age **/
+      </property>
+     </column>
+	   <column>
+      <property name="text">
+       <string>Potential Stake</string>
+      </property>
+     </column>
+  	 <column>
+      <property name="text">
+      <string>Days to Stake (est.)</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Weight</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Label</string>
+      </property>
+      </column>
+     <column>
+      <property name="text">
+      <string>Address</string>
       </property>
      </column>
      <column>
@@ -486,10 +552,12 @@
      </column>
      <column>
       <property name="text">
-       <string>Confirmations</string>
+       <string/>
       </property>
-      <property name="toolTip">
-       <string>Confirmed</string>
+     </column>
+     <column>
+      <property name="text">
+       <string/>
       </property>
      </column>
      <column>
@@ -502,17 +570,12 @@
        <string/>
       </property>
      </column>
-     <column>
+	 <column>
       <property name="text">
        <string/>
       </property>
      </column>
-     <column>
-      <property name="text">
-       <string/>
-      </property>
-     </column>
-     <column>
+	 <column>
       <property name="text">
        <string/>
       </property>
