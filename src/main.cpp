@@ -2556,12 +2556,11 @@ bool LoadBlockIndex(bool fAllowNew)
         block.nNonce   = 1774559;
 		if(fTestNet)
         {
-            block.nNonce   = 1774559;
+            block.nNonce   = 1838579;
         }
-        if (false  && (block.GetHash() != hashGenesisBlock)) {
-
-        // This will figure out a valid hash and Nonce if you're
-        // creating a different genesis block:
+        if (false && block.GetHash() != (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet)) {
+            // This will figure out a valid hash and Nonce if you're
+            // creating a different genesis block:
             uint256 hashTarget = CBigNum().SetCompact(block.nBits).getuint256();
             while (block.GetHash() > hashTarget)
                {
@@ -2872,7 +2871,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         CAddress addrFrom;
         uint64_t nNonce = 1;
         vRecv >> pfrom->nVersion >> pfrom->nServices >> nTime >> addrMe;
-        if (pfrom->nVersion < MIN_PROTO_VERSION || (nBestHeight >= 4500 && pfrom->nVersion < MIN_PEER_PROTO_VERSION))
+        if (pfrom->nVersion < MIN_PEER_PROTO_VERSION)
         {
             // Since February 20, 2012, the protocol is initiated at version 209,
             // and earlier versions are no longer supported
