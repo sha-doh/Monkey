@@ -1047,16 +1047,16 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
         nRewardCoinYear = 365 * CENT;
     }
 	
-	int64_t nSubsidy = nCoinAge * nRewardCoinYear  * 33 / (365 * 33 + 8);
-	
-	if (pindexBest->nHeight <= 4500)
+    int64_t nSubsidy = nCoinAge * (nRewardCoinYear / CENT / 100) / 365;
+
+	if (pindexBest->nHeight <= 4500 && !TestNet()) {
         nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
+    }
 
     if (fDebug && GetBoolArg("-printcreation"))
-        printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nCoinAge);
+        printf("GetProofOfStakeReward(): create=%s nRewardCoinYear=%"PRId64" nCoinAge=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nRewardCoinYear/CENT, nCoinAge);
 
     return nSubsidy + nFees;
-        
 }
 
 static const int64_t nTargetTimespan = 10 * 60;  // 20 mins
