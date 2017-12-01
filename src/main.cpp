@@ -980,7 +980,7 @@ const int DAILY_BLOCKCOUNT =  480;
 // miner's coin stake reward based on coin age spent (coin-days)
 int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
 {
-    if (pindexBest->nHeight <= 1000)
+    if (!fTestNet && pindexBest->nHeight <= 1000)
         nRewardCoinYear = 0 * CENT;
     else if (pindexBest->nHeight <= 5000)
     {
