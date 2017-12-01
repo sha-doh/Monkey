@@ -1049,7 +1049,7 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
 	
     int64_t nSubsidy = nCoinAge * (nRewardCoinYear / CENT / 100) / 365;
 
-	if (pindexBest->nHeight <= 4500 && !TestNet()) {
+	if (pindexBest->nHeight <= 4500 && !fTestNet) {
         nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
     }
 
