@@ -963,7 +963,7 @@ int64_t GetProofOfWorkReward(int64_t nFees)
 	}
 	else if (pindexBest->nHeight <= 10000)
 	{
-		nSubsidy = 3 * COIN;
+		nSubsidy = 10 * COIN;
 	}
 	else if (pindexBest->nHeight <= 20000)
 	{
@@ -980,83 +980,97 @@ const int DAILY_BLOCKCOUNT =  480;
 // miner's coin stake reward based on coin age spent (coin-days)
 int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
 {
-    if (pindexBest->nHeight <= 1000)
-        nRewardCoinYear = 0 * CENT;
-    else if (pindexBest->nHeight <= 5000)
-    {
+    if (fTestNet) {
+        // Base %
         nRewardCoinYear = 365 * CENT;
+
+        if (pindexBest->nHeight <= 50) 
+            nRewardCoinYear = 365 * CENT;
+        else if (pindexBest->nHeight <= 100)
+            nRewardCoinYear = 1850 * CENT;
+        else if (pindexBest->nHeight <= 500)
+            nRewardCoinYear = 3650 * CENT;
+        
+    } else {
+        // Main net
+        if (pindexBest->nHeight <= 1000)
+            nRewardCoinYear = 0 * CENT;
+        else if (pindexBest->nHeight <= 5000)
+        {
+            nRewardCoinYear = 365 * CENT;
+        }
+        else if (pindexBest->nHeight <= 6000)
+        {
+            nRewardCoinYear = 1850 * CENT;
+        }
+        else if (pindexBest->nHeight <= 10000)
+        {
+            nRewardCoinYear = 365 * CENT;
+        }
+        else if (pindexBest->nHeight <= 16500)
+        {
+            nRewardCoinYear = ((pindexBest->nHeight <= 10501) ? 1850 * CENT : 365 * CENT);
+        }
+        else if (pindexBest->nHeight <= 20000)
+        {
+            nRewardCoinYear = ((pindexBest->nHeight <= 18501) ? 3650 * CENT : 365 * CENT);
+        }
+        else if (pindexBest->nHeight <= 30000)
+        {
+            nRewardCoinYear = ((pindexBest->nHeight <= 20501) ? 1850 * CENT : 365 * CENT);
+        }
+        else if (pindexBest->nHeight <= 40000)
+        {
+            nRewardCoinYear = ((pindexBest->nHeight <= 30501) ? 1850 * CENT : 365 * CENT);
+        }
+        else if (pindexBest->nHeight <= 50000)
+        {
+            nRewardCoinYear = ((pindexBest->nHeight <= 40501) ? 1850 * CENT : 365 * CENT);
+        }
+        else if (pindexBest->nHeight <= 55000)
+        {
+            nRewardCoinYear = ((pindexBest->nHeight <= 50251) ? 3650 * CENT : 730 * CENT);
+        }
+        else if (pindexBest->nHeight <= 60000)
+        {
+            nRewardCoinYear = 365 * CENT;
+        }
+        else if (pindexBest->nHeight <= 70000)
+        {
+            nRewardCoinYear = ((pindexBest->nHeight <= 60501) ? 1850 * CENT : 365 * CENT);
+        }
+        else if (pindexBest->nHeight <= 80000)
+        {
+            nRewardCoinYear = ((pindexBest->nHeight <= 70501) ? 1850 * CENT : 365 * CENT);
+        }
+        else if (pindexBest->nHeight <= 90000)
+        {
+            nRewardCoinYear = ((pindexBest->nHeight <= 80501) ? 1850 * CENT : 365 * CENT);
+        }
+        else if (pindexBest->nHeight <= 100000)
+        {
+            nRewardCoinYear = ((pindexBest->nHeight <= 90501) ? 1850 * CENT : 365 * CENT);
+        }
+        else if (pindexBest->nHeight <= 105000)
+        {
+            nRewardCoinYear = ((pindexBest->nHeight <= 100251) ? 3650 * CENT : 730 * CENT);
+        }
+        else if (pindexBest->nHeight <= 500000)
+        {
+            nRewardCoinYear = 365 * CENT;
+        }
     }
-    else if (pindexBest->nHeight <= 6000)
-    {
-        nRewardCoinYear = ((pindexBest->nHeight <= 5251) ? 1850 * CENT : 365 * CENT);
-    }
-    else if (pindexBest->nHeight <= 10000)
-    {
-        nRewardCoinYear = 365 * CENT;
-    }
-    else if (pindexBest->nHeight <= 16500)
-    {
-        nRewardCoinYear = ((pindexBest->nHeight <= 10501) ? 1850 * CENT : 365 * CENT);
-    }
-    else if (pindexBest->nHeight <= 20000)
-    {
-        nRewardCoinYear = ((pindexBest->nHeight <= 18501) ? 3650 * CENT : 365 * CENT);
-    }
-    else if (pindexBest->nHeight <= 30000)
-    {
-        nRewardCoinYear = ((pindexBest->nHeight <= 20501) ? 1850 * CENT : 365 * CENT);
-    }
-    else if (pindexBest->nHeight <= 40000)
-    {
-        nRewardCoinYear = ((pindexBest->nHeight <= 30501) ? 1850 * CENT : 365 * CENT);
-    }
-    else if (pindexBest->nHeight <= 50000)
-    {
-        nRewardCoinYear = ((pindexBest->nHeight <= 40501) ? 1850 * CENT : 365 * CENT);
-    }
-    else if (pindexBest->nHeight <= 55000)
-    {
-        nRewardCoinYear = ((pindexBest->nHeight <= 50251) ? 3650 * CENT : 730 * CENT);
-    }
-    else if (pindexBest->nHeight <= 60000)
-    {
-        nRewardCoinYear = 365 * CENT;
-    }
-    else if (pindexBest->nHeight <= 70000)
-    {
-        nRewardCoinYear = ((pindexBest->nHeight <= 60501) ? 1850 * CENT : 365 * CENT);
-    }
-    else if (pindexBest->nHeight <= 80000)
-    {
-        nRewardCoinYear = ((pindexBest->nHeight <= 70501) ? 1850 * CENT : 365 * CENT);
-    }
-    else if (pindexBest->nHeight <= 90000)
-    {
-        nRewardCoinYear = ((pindexBest->nHeight <= 80501) ? 1850 * CENT : 365 * CENT);
-    }
-    else if (pindexBest->nHeight <= 100000)
-    {
-        nRewardCoinYear = ((pindexBest->nHeight <= 90501) ? 1850 * CENT : 365 * CENT);
-    }
-    else if (pindexBest->nHeight <= 105000)
-    {
-        nRewardCoinYear = ((pindexBest->nHeight <= 100251) ? 3650 * CENT : 730 * CENT);
-    }
-    else if (pindexBest->nHeight <= 500000)
-    {
-        nRewardCoinYear = 365 * CENT;
-    }
-	
-	int64_t nSubsidy = nCoinAge * nRewardCoinYear  * 33 / (365 * 33 + 8);
-	
-	if (pindexBest->nHeight <= 4500)
+
+    int64_t nSubsidy = nCoinAge * (nRewardCoinYear / CENT / 100) / 365;
+
+	if (pindexBest->nHeight <= 4500 && !fTestNet) {
         nSubsidy = nCoinAge * nRewardCoinYear / 365 / COIN;
+    }
 
     if (fDebug && GetBoolArg("-printcreation"))
-        printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nCoinAge);
+        printf("GetProofOfStakeReward(): create=%s nRewardCoinYear=%"PRId64" nCoinAge=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nRewardCoinYear/CENT, nCoinAge);
 
     return nSubsidy + nFees;
-        
 }
 
 static const int64_t nTargetTimespan = 10 * 60;  // 20 mins
@@ -2556,12 +2570,11 @@ bool LoadBlockIndex(bool fAllowNew)
         block.nNonce   = 1774559;
 		if(fTestNet)
         {
-            block.nNonce   = 1774559;
+            block.nNonce   = 1838579;
         }
-        if (false  && (block.GetHash() != hashGenesisBlock)) {
-
-        // This will figure out a valid hash and Nonce if you're
-        // creating a different genesis block:
+        if (false && block.GetHash() != (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet)) {
+            // This will figure out a valid hash and Nonce if you're
+            // creating a different genesis block:
             uint256 hashTarget = CBigNum().SetCompact(block.nBits).getuint256();
             while (block.GetHash() > hashTarget)
                {
@@ -2872,7 +2885,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         CAddress addrFrom;
         uint64_t nNonce = 1;
         vRecv >> pfrom->nVersion >> pfrom->nServices >> nTime >> addrMe;
-        if (pfrom->nVersion < MIN_PROTO_VERSION || (nBestHeight >= 4500 && pfrom->nVersion < MIN_PEER_PROTO_VERSION))
+        if (pfrom->nVersion < MIN_PEER_PROTO_VERSION)
         {
             // Since February 20, 2012, the protocol is initiated at version 209,
             // and earlier versions are no longer supported
