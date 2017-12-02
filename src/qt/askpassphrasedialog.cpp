@@ -8,7 +8,7 @@
 #include <QPushButton>
 #include <QKeyEvent>
 
-extern bool fWalletUnlockStakingOnly;
+bool fWalletUnlockStakingOnly;
 
 AskPassphraseDialog::AskPassphraseDialog(Mode mode, QWidget *parent) :
     QDialog(parent),
@@ -144,9 +144,20 @@ void AskPassphraseDialog::accept()
             QDialog::reject(); // Cancelled
         }
         } break;
-    case UnlockStaking:
     case Unlock:
-        if(!model->setWalletLocked(false, oldpass))
+        if(!model->setWalletLocked(false, oldpass, false))
+        {
+            QMessageBox::critical(this, tr("Wallet unlock failed"),
+                                  tr("The passphrase entered for the wallet decryption was incorrect."));
+        }
+        else
+        {
+            fWalletUnlockStakingOnly = ui->stakingCheckBox->isChecked();
+            QDialog::accept(); // Success
+        }
+        break;
+    case UnlockStaking:
+        if(!model->setWalletLocked(false, oldpass, true))
         {
             QMessageBox::critical(this, tr("Wallet unlock failed"),
                                   tr("The passphrase entered for the wallet decryption was incorrect."));

@@ -112,11 +112,6 @@ bool CWallet::AddCScript(const CScript& redeemScript)
     return CWalletDB(strWalletFile).WriteCScript(Hash160(redeemScript), redeemScript);
 }
 
-// optional setting to unlock wallet for staking only
-// serves to disable the trivial sendmoney when OS account compromised
-// provides no real security
-bool fWalletUnlockStakingOnly = false;
-
 bool CWallet::Unlock(const SecureString& strWalletPassphrase)
 {
     if (!IsLocked())
@@ -1816,6 +1811,8 @@ bool CWallet::GetStakeWeightFromValue(const int64_t& nTime, const int64_t& nValu
     int64_t nTimeWeight = GetWeight(nTime, (int64_t)GetTime());
     if (nTimeWeight < 0)
         nTimeWeight = 0;
+    if (nTimeWeight > nStakeMaxAge)
+        nTimeWeight = nStakeMaxAge;
 
     CBigNum bnCoinDayWeight = CBigNum(nValue) * nTimeWeight / COIN / (24 * 60 * 60);
     nWeight = bnCoinDayWeight.getuint64();

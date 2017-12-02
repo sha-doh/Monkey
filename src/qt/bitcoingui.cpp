@@ -889,7 +889,14 @@ void BitcoinGUI::lockWallet()
     if(!walletModel)
         return;
 
-    walletModel->setWalletLocked(true);
+    // Lock wallet when requested by user
+    if(walletModel->getEncryptionStatus() == WalletModel::Unlocked)
+         walletModel->setWalletLocked(true,"",true);
+
+    notificator->notify(Notificator::Warning,
+        tr("Lock Wallet Information"),
+        tr("Wallet has been unlocked. \n"
+            "Proof of Stake has stopped.\n"));
 }
 
 void BitcoinGUI::showNormalIfMinimized(bool fToggleHidden)
