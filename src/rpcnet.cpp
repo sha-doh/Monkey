@@ -52,7 +52,7 @@ Value getpeerinfo(const Array& params, bool fHelp)
         Object obj;
 
         obj.push_back(Pair("addr", stats.addrName));
-        obj.push_back(Pair("services", strprintf("%08"PRIx64, stats.nServices)));
+        obj.push_back(Pair("services", strprintf("%08" PRIx64, stats.nServices)));
         obj.push_back(Pair("lastsend", (boost::int64_t)stats.nLastSend));
         obj.push_back(Pair("lastrecv", (boost::int64_t)stats.nLastRecv));
         obj.push_back(Pair("conntime", (boost::int64_t)stats.nTimeConnected));
@@ -67,8 +67,8 @@ Value getpeerinfo(const Array& params, bool fHelp)
 
     return ret;
 }
- 
-// ppcoin: send alert.  
+
+// ppcoin: send alert.
 // There is a known deadlock situation with ThreadMessageHandler
 // ThreadMessageHandler: holds cs_vSend and acquiring cs_main in SendMessages()
 // ThreadRPCServer: holds cs_main and acquiring cs_vSend in alert.RelayTo()/PushMessage()/BeginMessage()
@@ -108,8 +108,8 @@ Value sendalert(const Array& params, bool fHelp)
     key.SetPrivKey(CPrivKey(vchPrivKey.begin(), vchPrivKey.end())); // if key is not correct openssl may crash
     if (!key.Sign(Hash(alert.vchMsg.begin(), alert.vchMsg.end()), alert.vchSig))
         throw runtime_error(
-            "Unable to sign alert, check private key?\n");  
-    if(!alert.ProcessAlert()) 
+            "Unable to sign alert, check private key?\n");
+    if(!alert.ProcessAlert())
         throw runtime_error(
             "Failed to process alert.\n");
     // Relay alert
