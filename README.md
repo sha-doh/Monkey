@@ -1,5 +1,5 @@
 monkey-Wallet
-<br>Version 1.0.0
+<br>Version 1.3.0
 
 Welcome to the Wallet-Source of monkey<br>
 we will update the README.md with build instructions soon.
