@@ -7,7 +7,6 @@ CONFIG += no_include_pwd
 CONFIG += thread
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 lessThan(QT_MAJOR_VERSION, 5): CONFIG += static
-QMAKE_CXXFLAGS = -fpermissive
 
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT += widgets
@@ -31,12 +30,24 @@ UI_DIR = build
 # use: qmake "RELEASE=1"
 contains(RELEASE, 1) {
     # Mac: compile for maximum compatibility (10.5, 32-bit)
-    macx:QMAKE_CXXFLAGS += -mmacosx-version-min=10.5 -arch x86_64 -isysroot /Developer/SDKs/MacOSX10.5.sdk
+    macx:QMAKE_CXXFLAGS += -mmacosx-version-min=10.12 -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
 
     !windows:!macx {
         # Linux: static link
         LIBS += -Wl,-Bstatic
     }
+}
+
+macx {
+    MINIUPNPC_INCLUDE_PATH = /usr/local/Cellar/miniupnpc/2.0.20170509/include
+    MINIUPNPC_LIB_PATH = /usr/local/Cellar/miniupnpc/2.0.20170509/lib
+    OPENSSL_INCLUDE_PATH = /usr/local/Cellar/openssl/1.0.2l/include
+    OPENSSL_LIB_PATH = /usr/local/Cellar/openssl/1.0.2l/lib
+    BDB_LIB_PATH = /usr/local/Cellar/berkeley-db@4/4.8.30/lib
+    BDB_LIB_SUFFIX = -4.8
+    BDB_INCLUDE_PATH = /usr/local/Cellar/berkeley-db@4/4.8.30/include
+    BOOST_LIB_PATH = /usr/local/Cellar/boost/1.65.1/lib
+    BOOST_INCLUDE_PATH = /usr/local/Cellar/boost/1.65.1/include
 }
 
 !win32 {
