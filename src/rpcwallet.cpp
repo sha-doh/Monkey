@@ -106,7 +106,7 @@ Value getinfo(const Array& params, bool fHelp)
     obj.push_back(Pair("keypoolsize",   (int)pwalletMain->GetKeyPoolSize()));
     obj.push_back(Pair("paytxfee",      ValueFromAmount(nTransactionFee)));
     obj.push_back(Pair("mininput",      ValueFromAmount(nMinimumInputValue)));
-	
+
 	std::string strLockState = "";
 	if(pwalletMain->IsLocked())
 		strLockState = "Wallet Locked";
@@ -799,7 +799,7 @@ Value addmultisigaddress(const Array& params, bool fHelp)
     if ((int)keys.size() < nRequired)
         throw runtime_error(
             strprintf("not enough keys supplied "
-                      "(got %"PRIszu" keys, but need at least %d to redeem)", keys.size(), nRequired));
+                      "(got %" PRIszu " keys, but need at least %d to redeem)", keys.size(), nRequired));
     std::vector<CKey> pubkeys;
     pubkeys.resize(keys.size());
     for (unsigned int i = 0; i < keys.size(); i++)
@@ -1777,7 +1777,7 @@ Value makekeypair(const Array& params, bool fHelp)
     string strPrefix = "";
     if (params.size() > 0)
         strPrefix = params[0].get_str();
- 
+
     CKey key;
     key.MakeNewKey(false);
 
@@ -1794,18 +1794,18 @@ Value setstakesplitthreshold(const Array& params, bool fHelp)
         throw runtime_error(
             "setstakesplitthreshold <1 - 9999999>\n"
             "This will set the output size of your stakes to never be below this number\n");
-    
+
 	uint64_t nStakeSplitThreshold = boost::lexical_cast<int>(params[0].get_str());
 	if (pwalletMain->IsLocked())
         throw JSONRPCError(RPC_WALLET_UNLOCK_NEEDED, "Error: Unlock wallet to use this feature");
 	if (nStakeSplitThreshold > 9999999)
 		return "out of range (1 - 9999999) - setting split threshold failed";
-	
+
 	CWalletDB walletdb(pwalletMain->strWalletFile);
 	LOCK(pwalletMain->cs_wallet);
 	{
 		bool fFileBacked = pwalletMain->fFileBacked;
-		
+
 		Object result;
 		pwalletMain->nStakeSplitThreshold = nStakeSplitThreshold;
 		result.push_back(Pair("split stake threshold set to ", int(pwalletMain->nStakeSplitThreshold)));
@@ -1816,7 +1816,7 @@ Value setstakesplitthreshold(const Array& params, bool fHelp)
 		}
 		else
 			result.push_back(Pair("saved to wallet.dat ", "false"));
-		
+
 		return result;
 	}
 }
