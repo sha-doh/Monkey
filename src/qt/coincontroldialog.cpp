@@ -26,6 +26,7 @@
 
 extern unsigned int nTargetSpacing;
 extern int64_t nRewardCoinYear;
+extern unsigned int nStakeMaxAge;
 
 using namespace std;
 QList<qint64> CoinControlDialog::payAmounts;
@@ -856,7 +857,7 @@ void CoinControlDialog::updateView()
             itemOutput->setText(COLUMN_WEIGHT, strPad(QString::number(nDisplayWeight), 8, " "));
 
             // age
-            uint64_t nAge = (GetTime() - nTime);
+            uint64_t nAge = min((uint64_t)GetTime() - nTime, (uint64_t)nStakeMaxAge);
             itemOutput->setText(COLUMN_AGE, QString::number((double)nAge / 86400, 'f', 2));
             itemOutput->setText(COLUMN_AGE_INT64, QString::number((double)nAge / 86400, 'f', 2));
 
