@@ -18,7 +18,6 @@
 #include "util.h"
 #include "walletdb.h"
 
-extern bool fWalletUnlockStakingOnly;
 extern bool fConfChange;
 class CAccountingEntry;
 class CWalletTx;
@@ -96,6 +95,7 @@ public:
     typedef std::map<unsigned int, CMasterKey> MasterKeyMap;
     MasterKeyMap mapMasterKeys;
     unsigned int nMasterKeyMaxID;
+    bool fWalletUnlockStakingOnly;
 
     CWallet()
     {
@@ -107,6 +107,7 @@ public:
         nOrderPosNext = 0;
         nStakeSplitThreshold = 500;
 		fSplitBlock = false;
+        fWalletUnlockStakingOnly = false;
     }
     CWallet(std::string strWalletFileIn)
     {
@@ -119,6 +120,7 @@ public:
         nOrderPosNext = 0;
         nStakeSplitThreshold = 500;
 		fSplitBlock = false;
+        fWalletUnlockStakingOnly = false;
     }
 
     std::map<uint256, CWalletTx> mapWallet;

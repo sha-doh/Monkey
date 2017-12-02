@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = Monkey-qt
-VERSION = 1.1.0
+VERSION = 1.3.0
 INCLUDEPATH += src src/json src/qt
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE
 CONFIG += no_include_pwd
@@ -13,22 +13,6 @@ greaterThan(QT_MAJOR_VERSION, 4) {
     QT += widgets
     DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
 }
-
-win32 {
-BOOST_INCLUDE_PATH=C:/deps/32/boost_1_55_0
-BOOST_LIB_PATH=C:/deps/32/boost_1_55_0/stage/lib
-BDB_INCLUDE_PATH=C:/deps/32/db-4.8.30.NC/build_unix
-BDB_LIB_PATH=C:/deps/32/db-4.8.30.NC/build_unix
-OPENSSL_INCLUDE_PATH=C:/deps/32/openssl-1.0.1l/include
-OPENSSL_LIB_PATH=C:/deps/32/openssl-1.0.1l
-MINIUPNPC_INCLUDE_PATH=C:/deps/32/
-MINIUPNPC_LIB_PATH=C:/deps/32/miniupnpc
-LIBPNG_INCLUDE_PATH=C:/deps/32/libpng-1.6.16
-LIBPNG_LIB_PATH=C:/deps/32/libpng-1.6.16/.libs
-QRENCODE_INCLUDE_PATH=C:/deps/32/qrencode-3.4.4
-QRENCODE_LIB_PATH=C:/deps/32/qrencode-3.4.4/.libs
-}
-
 
 # for boost 1.37, add -mt to the boost libraries
 # use: qmake BOOST_LIB_SUFFIX=-mt
@@ -143,7 +127,7 @@ SOURCES += src/txdb-leveldb.cpp \
         QMAKE_RANLIB = $$replace(QMAKE_STRIP, strip, ranlib)
     }
     LIBS += -lshlwapi
-    #genleveldb.commands = cd $$PWD/src/leveldb && CC=$$QMAKE_CC CXX=$$QMAKE_CXX TARGET_OS=OS_WINDOWS_CROSSCOMPILE $(MAKE) OPT=\"$$QMAKE_CXXFLAGS $$QMAKE_CXXFLAGS_RELEASE\" libleveldb.a libmemenv.a && $$QMAKE_RANLIB $$PWD/src/leveldb/libleveldb.a && $$QMAKE_RANLIB $$PWD/src/leveldb/libmemenv.a
+    genleveldb.commands = cd $$PWD/src/leveldb && CC=$$QMAKE_CC CXX=$$QMAKE_CXX TARGET_OS=OS_WINDOWS_CROSSCOMPILE $(MAKE) OPT=\"$$QMAKE_CXXFLAGS $$QMAKE_CXXFLAGS_RELEASE\" libleveldb.a libmemenv.a && $$QMAKE_RANLIB $$PWD/src/leveldb/libleveldb.a && $$QMAKE_RANLIB $$PWD/src/leveldb/libmemenv.a
 }
 genleveldb.target = $$PWD/src/leveldb/libleveldb.a
 genleveldb.depends = FORCE
@@ -266,7 +250,6 @@ HEADERS += src/qt/bitcoingui.h \
     src/qt/askpassphrasedialog.h \
     src/protocol.h \
     src/qt/notificator.h \
-    src/qt/qtipcserver.h \
     src/allocators.h \
     src/ui_interface.h \
     src/qt/rpcconsole.h \
@@ -352,7 +335,6 @@ SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/qt/askpassphrasedialog.cpp \
     src/protocol.cpp \
     src/qt/notificator.cpp \
-    src/qt/qtipcserver.cpp \
     src/qt/rpcconsole.cpp \
     src/noui.cpp \
     src/kernel.cpp \
