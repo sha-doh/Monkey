@@ -981,15 +981,15 @@ const int DAILY_BLOCKCOUNT =  480;
 int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
 {
     if (fTestNet) {
-        // Base %
+        int lastDigit = pindexBest->nHeight % 10;
         nRewardCoinYear = 365 * CENT;
-
-        if (pindexBest->nHeight <= 50)
-            nRewardCoinYear = 365 * CENT;
-        else if (pindexBest->nHeight <= 100)
+        
+        if (lastDigit == 1) // SUPERBLOCK
+            nRewardCoinYear = 730 * CENT;
+        else if (lastDigit == 5 || lastDigit == 8) // ULTRABLOCKS
             nRewardCoinYear = 1850 * CENT;
-        else if (pindexBest->nHeight <= 500)
-            nRewardCoinYear = 3650 * CENT;
+
+        printf("GetProofOfStakeReward(): nHeight=%d nBestHeight=%d lastDigit=%d nRewardCoinYear=%" PRId64 " nCoinAge=%" PRId64 "\n", pindexBest->nHeight, nBestHeight, lastDigit, nRewardCoinYear/CENT, nCoinAge);
 
     } else {
         // Main net
@@ -1007,57 +1007,18 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
         {
             nRewardCoinYear = 365 * CENT;
         }
-        else if (pindexBest->nHeight <= 16500)
+        else if (pindexBest->nHeight <= 15999)
         {
             nRewardCoinYear = ((pindexBest->nHeight <= 10501) ? 1850 * CENT : 365 * CENT);
         }
-        else if (pindexBest->nHeight <= 20000)
-        {
-            nRewardCoinYear = ((pindexBest->nHeight <= 18501) ? 3650 * CENT : 365 * CENT);
-        }
-        else if (pindexBest->nHeight <= 30000)
-        {
-            nRewardCoinYear = ((pindexBest->nHeight <= 20501) ? 1850 * CENT : 365 * CENT);
-        }
-        else if (pindexBest->nHeight <= 40000)
-        {
-            nRewardCoinYear = ((pindexBest->nHeight <= 30501) ? 1850 * CENT : 365 * CENT);
-        }
-        else if (pindexBest->nHeight <= 50000)
-        {
-            nRewardCoinYear = ((pindexBest->nHeight <= 40501) ? 1850 * CENT : 365 * CENT);
-        }
-        else if (pindexBest->nHeight <= 55000)
-        {
-            nRewardCoinYear = ((pindexBest->nHeight <= 50251) ? 3650 * CENT : 730 * CENT);
-        }
-        else if (pindexBest->nHeight <= 60000)
-        {
+        else {
+            int lastDigit = pindexBest->nHeight % 10;
             nRewardCoinYear = 365 * CENT;
-        }
-        else if (pindexBest->nHeight <= 70000)
-        {
-            nRewardCoinYear = ((pindexBest->nHeight <= 60501) ? 1850 * CENT : 365 * CENT);
-        }
-        else if (pindexBest->nHeight <= 80000)
-        {
-            nRewardCoinYear = ((pindexBest->nHeight <= 70501) ? 1850 * CENT : 365 * CENT);
-        }
-        else if (pindexBest->nHeight <= 90000)
-        {
-            nRewardCoinYear = ((pindexBest->nHeight <= 80501) ? 1850 * CENT : 365 * CENT);
-        }
-        else if (pindexBest->nHeight <= 100000)
-        {
-            nRewardCoinYear = ((pindexBest->nHeight <= 90501) ? 1850 * CENT : 365 * CENT);
-        }
-        else if (pindexBest->nHeight <= 105000)
-        {
-            nRewardCoinYear = ((pindexBest->nHeight <= 100251) ? 3650 * CENT : 730 * CENT);
-        }
-        else if (pindexBest->nHeight <= 500000)
-        {
-            nRewardCoinYear = 365 * CENT;
+            
+            if (lastDigit == 1) // SUPERBLOCK
+                nRewardCoinYear = 730 * CENT;
+            else if (lastDigit == 5 || lastDigit == 8) // ULTRABLOCKS
+                nRewardCoinYear = 1850 * CENT;
         }
     }
 
@@ -2885,7 +2846,8 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         CAddress addrFrom;
         uint64_t nNonce = 1;
         vRecv >> pfrom->nVersion >> pfrom->nServices >> nTime >> addrMe;
-        if (pfrom->nVersion < MIN_PEER_PROTO_VERSION)
+        if (pfrom->nVersion < MIN_PEER_PROTO_VERSION ||
+            (nBestHeight > SOFT_FORK_VERSION_140 && pfrom->nVersion < MIN_PEER_PROTO_VERSION_140))
         {
             // Since February 20, 2012, the protocol is initiated at version 209,
             // and earlier versions are no longer supported
