@@ -985,9 +985,9 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
         nRewardCoinYear = 365 * CENT;
         
         if (lastDigit == 1) // SUPERBLOCK
-            nRewardCoinYear = 730 * CENT;
-        else if (lastDigit == 5 || lastDigit == 8) // ULTRABLOCKS
             nRewardCoinYear = 1850 * CENT;
+        else if (lastDigit == 5 || lastDigit == 8) // ULTRABLOCKS
+            nRewardCoinYear = 730 * CENT;
 
         printf("GetProofOfStakeReward(): nHeight=%d nBestHeight=%d lastDigit=%d nRewardCoinYear=%" PRId64 " nCoinAge=%" PRId64 "\n", pindexBest->nHeight, nBestHeight, lastDigit, nRewardCoinYear/CENT, nCoinAge);
 
@@ -1016,9 +1016,9 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
             nRewardCoinYear = 365 * CENT;
             
             if (lastDigit == 1) // SUPERBLOCK
-                nRewardCoinYear = 730 * CENT;
-            else if (lastDigit == 5 || lastDigit == 8) // ULTRABLOCKS
                 nRewardCoinYear = 1850 * CENT;
+            else if (lastDigit == 5 || lastDigit == 8) // ULTRABLOCKS
+                nRewardCoinYear = 730 * CENT;
         }
     }
 
