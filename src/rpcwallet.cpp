@@ -42,7 +42,7 @@ void EnsureWalletIsUnlocked()
 {
     if (pwalletMain->IsLocked())
         throw JSONRPCError(RPC_WALLET_UNLOCK_NEEDED, "Error: Please enter the wallet passphrase with walletpassphrase first.");
-    if (pwalletMain->fWalletUnlockStakingOnly)
+    if (fWalletUnlockStakingOnly)
         throw JSONRPCError(RPC_WALLET_UNLOCK_NEEDED, "Error: Wallet is unlocked for staking only.");
 }
 
@@ -110,7 +110,7 @@ Value getinfo(const Array& params, bool fHelp)
 	std::string strLockState = "";
 	if(pwalletMain->IsLocked())
 		strLockState = "Wallet Locked";
-	else if(pwalletMain->fWalletUnlockStakingOnly)
+	else if(fWalletUnlockStakingOnly)
 		strLockState = "Wallet Unlocked for Staking Only";
 	else
 		strLockState = "Wallet is Unlocked";
@@ -1469,9 +1469,9 @@ Value walletpassphrase(const Array& params, bool fHelp)
 
     // ppcoin: if user OS account compromised prevent trivial sendmoney commands
     if (params.size() > 2)
-        pwalletMain->fWalletUnlockStakingOnly = params[2].get_bool();
+        fWalletUnlockStakingOnly = params[2].get_bool();
     else
-        pwalletMain->fWalletUnlockStakingOnly = false;
+        fWalletUnlockStakingOnly = false;
 
     return Value::null;
 }
