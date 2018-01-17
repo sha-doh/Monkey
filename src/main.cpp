@@ -533,6 +533,10 @@ bool CTxMemPool::accept(CTxDB& txdb, CTransaction &tx, bool fCheckInputs,
     if (pfMissingInputs)
         *pfMissingInputs = false;
 
+    // Time (prevent mempool memory exhaustion attack)
+    if (tx.nTime > FutureDrift(GetAdjustedTime()))
+        return tx.DoS(10, error("CTxMemPool::accept() : transaction timestamp is too far in the future"));
+
     if (!tx.CheckTransaction())
         return error("CTxMemPool::accept() : CheckTransaction failed");
 
@@ -983,7 +987,7 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
     if (fTestNet) {
         int lastDigit = pindexBest->nHeight % 10;
         nRewardCoinYear = 365 * CENT;
-        
+
         if (lastDigit == 1) // SUPERBLOCK
             nRewardCoinYear = 1850 * CENT;
         else if (lastDigit == 5 || lastDigit == 8) // ULTRABLOCKS
@@ -1014,7 +1018,7 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
         else {
             int lastDigit = pindexBest->nHeight % 10;
             nRewardCoinYear = 365 * CENT;
-            
+
             if (lastDigit == 1) // SUPERBLOCK
                 nRewardCoinYear = 1850 * CENT;
             else if (lastDigit == 5 || lastDigit == 8) // ULTRABLOCKS
@@ -1145,13 +1149,14 @@ bool IsInitialBlockDownload()
         return true;
     static int64_t nLastUpdate;
     static CBlockIndex* pindexLastBest;
+    int64_t nCurrentTime = GetTime();
     if (pindexBest != pindexLastBest)
     {
         pindexLastBest = pindexBest;
-        nLastUpdate = GetTime();
+        nLastUpdate = nCurrentTime;
     }
-    return (GetTime() - nLastUpdate < 10 &&
-            pindexBest->GetBlockTime() < GetTime() - 24 * 60 * 60);
+    return (nCurrentTime - nLastUpdate < 10 &&
+            pindexBest->GetBlockTime() < nCurrentTime - 24 * 60 * 60);
 }
 
 void static InvalidChainFound(CBlockIndex* pindexNew)
@@ -2025,7 +2030,9 @@ bool CBlock::AddToBlockIndex(unsigned int nFile, unsigned int nBlockPos, const u
         hashPrevBestCoinBase = vtx[0].GetHash();
     }
 
-    uiInterface.NotifyBlocksChanged();
+    static int8_t counter = 0;
+    if( (++counter & 0x0F) == 0 || !IsInitialBlockDownload()) // repaint every 16 blocks if not in initial block download
+        uiInterface.NotifyBlocksChanged();
     return true;
 }
 
@@ -2035,17 +2042,14 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig) c
     // These are checks that are independent of context
     // that can be verified before saving an orphan block.
 
+    set<uint256> uniqueTx; // tx hashes
+    unsigned int nSigOps = 0; // total sigops
+
     // Size limits
     if (vtx.empty() || vtx.size() > MAX_BLOCK_SIZE || ::GetSerializeSize(*this, SER_NETWORK, PROTOCOL_VERSION) > MAX_BLOCK_SIZE)
         return DoS(100, error("CheckBlock() : size limits failed"));
 
-    // Check proof of work matches claimed amount
-    if (fCheckPOW && IsProofOfWork() && !CheckProofOfWork(GetHash(), nBits))
-        return DoS(50, error("CheckBlock() : proof of work failed"));
-
-    // Check timestamp
-    if (GetBlockTime() > FutureDrift(GetAdjustedTime()))
-        return error("CheckBlock() : block timestamp too far in the future");
+    bool fProofOfStake = IsProofOfStake();
 
     // First transaction must be coinbase, the rest must not be
     if (vtx.empty() || !vtx[0].IsCoinBase())
@@ -2054,12 +2058,25 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig) c
         if (vtx[i].IsCoinBase())
             return DoS(100, error("CheckBlock() : more than one coinbase"));
 
+    if (!vtx[0].CheckTransaction())
+        return DoS(vtx[0].nDoS, error("CheckBlock() : CheckTransaction failed on coinbase"));
+
     // Check coinbase timestamp
     if (GetBlockTime() > FutureDrift((int64_t)vtx[0].nTime))
         return DoS(50, error("CheckBlock() : coinbase timestamp is too early"));
 
-    if (IsProofOfStake())
+    uniqueTx.insert(vtx[0].GetHash());
+    nSigOps += vtx[0].GetLegacySigOpCount();
+
+    if (fProofOfStake)
     {
+        // Proof-of-STake related checkings. Note that we know here that 1st transactions is coinstake. We don't need
+        //   check the type of 1st transaction because it's performed earlier by IsProofOfStake()
+
+        // nNonce must be zero for proof-of-stake blocks
+        if (nNonce != 0)
+            return DoS(100, error("CheckBlock() : non-zero nonce in proof-of-stake block"));
+
         // Coinbase output should be empty if proof-of-stake block
         if (vtx[0].vout.size() != 1 || !vtx[0].vout[0].IsEmpty())
             return DoS(100, error("CheckBlock() : coinbase output not empty for proof-of-stake block"));
@@ -2078,41 +2095,69 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig) c
         // NovaCoin: check proof-of-stake block signature
         if (fCheckSig && !CheckBlockSignature())
             return DoS(100, error("CheckBlock() : bad proof-of-stake block signature"));
+
+        if (!vtx[1].CheckTransaction())
+            return DoS(vtx[1].nDoS, error("CheckBlock() : CheckTransaction failed on coinstake"));
+
+        uniqueTx.insert(vtx[1].GetHash());
+        nSigOps += vtx[1].GetLegacySigOpCount();
+    }
+    else
+    {
+        // Check proof of work matches claimed amount
+        if (fCheckPOW && !CheckProofOfWork(GetHash(), nBits))
+            return DoS(50, error("CheckBlock() : proof of work failed"));
+
+        // Check timestamp
+        if (GetBlockTime() > FutureDrift(GetAdjustedTime()))
+            return error("CheckBlock() : block timestamp too far in the future");
+
+        // Check coinbase timestamp
+        if (GetBlockTime() < PastDrift((int64_t)vtx[0].nTime))
+            return DoS(50, error("CheckBlock() : coinbase timestamp is too late"));
     }
 
-    // Check transactions
-    BOOST_FOREACH(const CTransaction& tx, vtx)
+    // Iterate all transactions starting from second for proof-of-stake block
+    //    or first for proof-of-work block
+    for (unsigned int i = fProofOfStake ? 2 : 1; i < vtx.size(); i++)
     {
+        const CTransaction& tx = vtx[i];
+
+        // Reject coinbase transactions at non-zero index
+        if (tx.IsCoinBase())
+            return DoS(100, error("CheckBlock() : coinbase at wrong index"));
+
+        // Reject coinstake transactions at index != 1
+        if (tx.IsCoinStake())
+            return DoS(100, error("CheckBlock() : coinstake at wrong index"));
+
+        // Check transaction timestamp
+        if (GetBlockTime() < (int64_t)tx.nTime)
+            return DoS(50, error("CheckBlock() : block timestamp earlier than transaction timestamp"));
+
+        // Check transaction consistency
         if (!tx.CheckTransaction())
             return DoS(tx.nDoS, error("CheckBlock() : CheckTransaction failed"));
 
-        // ppcoin: check transaction timestamp
-        if (GetBlockTime() < (int64_t)tx.nTime)
-            return DoS(50, error("CheckBlock() : block timestamp earlier than transaction timestamp"));
+        // Add transaction hash into list of unique transaction IDs
+        uniqueTx.insert(tx.GetHash());
+
+        // Calculate sigops count
+        nSigOps += tx.GetLegacySigOpCount();
     }
 
     // Check for duplicate txids. This is caught by ConnectInputs(),
     // but catching it earlier avoids a potential DoS attack:
-    set<uint256> uniqueTx;
-    BOOST_FOREACH(const CTransaction& tx, vtx)
-    {
-        uniqueTx.insert(tx.GetHash());
-    }
     if (uniqueTx.size() != vtx.size())
         return DoS(100, error("CheckBlock() : duplicate transaction"));
 
-    unsigned int nSigOps = 0;
-    BOOST_FOREACH(const CTransaction& tx, vtx)
-    {
-        nSigOps += tx.GetLegacySigOpCount();
-    }
+    // Reject block if validation would consume too much resources.
     if (nSigOps > MAX_BLOCK_SIGOPS)
         return DoS(100, error("CheckBlock() : out-of-bounds SigOpCount"));
 
     // Check merkle root
     if (fCheckMerkleRoot && hashMerkleRoot != BuildMerkleTree())
         return DoS(100, error("CheckBlock() : hashMerkleRoot mismatch"));
-
 
     return true;
 }
