@@ -1,4 +1,8 @@
 <RCC>
+    <qresource prefix="/fonts">
+        <file alias="ubuntu-r">res/fonts/Ubuntu-R.ttf</file>
+        <file alias="ubuntu-b">res/fonts/Ubuntu-B.ttf</file>
+    </qresource>
     <qresource prefix="/icons">
         <file alias="address-book">res/icons/address-book.png</file>
         <file alias="quit">res/icons/quit.png</file>
@@ -46,7 +50,7 @@
     <qresource prefix="/images">
         <file alias="about">res/images/about.png</file>
         <file alias="splash">res/images/splash.png</file>
-		<file alias="bkg">res/images/bkg.png</file>
+		<file alias="bkg">res/images/bkg.gif</file>
     </qresource>
     <qresource prefix="/movies">
         <file alias="update_spinner">res/movies/update_spinner.mng</file>
