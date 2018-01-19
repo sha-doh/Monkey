@@ -19,10 +19,13 @@
      <item>
       <widget class="QFrame" name="frame">
        <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
+        <enum>QFrame::NoFrame</enum>
        </property>
        <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
+        <enum>QFrame::Plain</enum>
+       </property>
+       <property name="lineWidth">
+        <number>0</number>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
@@ -31,14 +34,14 @@
            <widget class="QLabel" name="label_5">
             <property name="font">
              <font>
-              <family>Copperplate Gothic Light</family>
+              <family>Ubuntu</family>
               <pointsize>11</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 0);</string>
+             <string notr="true">color: rgb(255,255,255);</string>
             </property>
             <property name="text">
              <string>MONKEY COIN</string>
@@ -91,12 +94,12 @@
            <widget class="QLabel" name="label">
             <property name="font">
              <font>
-              <family>Copperplate Gothic Light</family>
+              <family>Ubuntu</family>
               <pointsize>9</pointsize>
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">color: #000</string>
+             <string notr="true">color: #fff</string>
             </property>
             <property name="text">
              <string>AVAILABLE :</string>
@@ -107,7 +110,7 @@
            <widget class="QLabel" name="labelBalance">
             <property name="font">
              <font>
-              <family>Copperplate Gothic Light</family>
+              <family>Ubuntu</family>
               <pointsize>9</pointsize>
               <weight>75</weight>
               <bold>true</bold>
@@ -120,7 +123,7 @@
              <string>Your current spendable balance</string>
             </property>
             <property name="styleSheet">
-             <string notr="true">color: #000</string>
+             <string notr="true">color: #fff</string>
             </property>
             <property name="text">
              <string notr="true">0 MONK</string>
@@ -134,12 +137,12 @@
            <widget class="QLabel" name="label_6">
             <property name="font">
              <font>
-              <family>Copperplate Gothic Light</family>
+              <family>Ubuntu</family>
               <pointsize>9</pointsize>
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">color: #000</string>
+             <string notr="true">color: #fff</string>
             </property>
             <property name="text">
              <string>STAKE :</string>
@@ -150,7 +153,7 @@
            <widget class="QLabel" name="labelStake">
             <property name="font">
              <font>
-              <family>Copperplate Gothic Light</family>
+              <family>Ubuntu</family>
               <pointsize>9</pointsize>
               <weight>75</weight>
               <bold>true</bold>
@@ -163,7 +166,7 @@
              <string>Total of coins that was staked, and do not yet count toward the current balance</string>
             </property>
             <property name="styleSheet">
-             <string notr="true">color: #000</string>
+             <string notr="true">color: #fff</string>
             </property>
             <property name="text">
              <string notr="true">0 MONK</string>
@@ -177,12 +180,12 @@
            <widget class="QLabel" name="label_3">
             <property name="font">
              <font>
-              <family>Copperplate Gothic Light</family>
+              <family>Ubuntu</family>
               <pointsize>9</pointsize>
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">color: #000</string>
+             <string notr="true">color: #fff</string>
             </property>
             <property name="text">
              <string>PENDING :</string>
@@ -193,7 +196,7 @@
            <widget class="QLabel" name="labelUnconfirmed">
             <property name="font">
              <font>
-              <family>Copperplate Gothic Light</family>
+              <family>Ubuntu</family>
               <pointsize>9</pointsize>
               <weight>75</weight>
               <bold>true</bold>
@@ -206,7 +209,7 @@
              <string>Total of transactions that have yet to be confirmed, and do not yet count toward the current balance</string>
             </property>
             <property name="styleSheet">
-             <string notr="true">color: #000</string>
+             <string notr="true">color: #fff</string>
             </property>
             <property name="text">
              <string notr="true">0 MONK</string>
@@ -220,12 +223,12 @@
            <widget class="QLabel" name="labelImmatureText">
             <property name="font">
              <font>
-              <family>Copperplate Gothic Light</family>
+              <family>Ubuntu</family>
               <pointsize>9</pointsize>
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">color: #000</string>
+             <string notr="true">color: #fff</string>
             </property>
             <property name="text">
              <string>IMMATURE:</string>
@@ -236,7 +239,7 @@
            <widget class="QLabel" name="labelImmature">
             <property name="font">
              <font>
-              <family>Copperplate Gothic Light</family>
+              <family>Ubuntu</family>
               <pointsize>9</pointsize>
               <weight>75</weight>
               <bold>true</bold>
@@ -246,7 +249,7 @@
              <string>Mined balance that has not yet matured</string>
             </property>
             <property name="styleSheet">
-             <string notr="true">color: #000</string>
+             <string notr="true">color: #fff</string>
             </property>
             <property name="text">
              <string notr="true">0 MONK</string>
@@ -260,12 +263,12 @@
            <widget class="QLabel" name="labelMintedText">
             <property name="font">
              <font>
-              <family>Copperplate Gothic Light</family>
+              <family>Ubuntu</family>
               <pointsize>9</pointsize>
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">color: #000</string>
+             <string notr="true">color: #fff</string>
             </property>
             <property name="text">
              <string>Total minted:</string>
@@ -276,7 +279,7 @@
            <widget class="QLabel" name="labelMinted">
             <property name="font">
              <font>
-              <family>Copperplate Gothic Light</family>
+              <family>Ubuntu</family>
               <pointsize>9</pointsize>
               <weight>75</weight>
               <bold>true</bold>
@@ -289,7 +292,7 @@
              <string>Total number of coins made by POS</string>
             </property>
             <property name="styleSheet">
-             <string notr="true">color: #000</string>
+             <string notr="true">color: #fff</string>
             </property>
             <property name="text">
              <string notr="true">0 MONK</string>
@@ -303,7 +306,7 @@
            <widget class="QLabel" name="labelTotal">
             <property name="font">
              <font>
-              <family>Copperplate Gothic Light</family>
+              <family>Ubuntu</family>
               <pointsize>11</pointsize>
               <weight>75</weight>
               <bold>true</bold>
@@ -316,7 +319,7 @@
              <string>Your current total balance</string>
             </property>
             <property name="styleSheet">
-             <string notr="true">color: #000</string>
+             <string notr="true">color: #fff</string>
             </property>
             <property name="text">
              <string notr="true">0.00000000 MONK</string>
@@ -376,10 +379,13 @@
      <item>
       <widget class="QFrame" name="frame_2">
        <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
+        <enum>QFrame::NoFrame</enum>
        </property>
        <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
+        <enum>QFrame::Plain</enum>
+       </property>
+       <property name="lineWidth">
+        <number>0</number>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
@@ -388,17 +394,17 @@
            <widget class="QLabel" name="label_4">
             <property name="font">
              <font>
-              <family>Copperplate Gothic Light</family>
+              <family>Ubuntu</family>
               <pointsize>11</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">QLabel { color: #000000; border: none;}</string>
+             <string notr="true">QLabel { color: #fff; border: none;}</string>
             </property>
             <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#000;&quot;&gt;LAST TRANSACTIONS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#fff;&quot;&gt;LAST TRANSACTIONS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
           </item>
@@ -437,7 +443,7 @@
          <widget class="QListView" name="listTransactions">
           <property name="font">
            <font>
-            <family>Copperplate Gothic Light</family>
+            <family>Ubuntu</family>
            </font>
           </property>
           <property name="styleSheet">

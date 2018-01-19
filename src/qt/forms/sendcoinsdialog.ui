@@ -13,9 +13,12 @@
   <property name="windowTitle">
    <string>Send Coins</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0">
    <property name="bottomMargin">
-    <number>8</number>
+    <number>9</number>
    </property>
    <item>
     <widget class="QFrame" name="frameCoinControl">
@@ -31,11 +34,18 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background:#fff;
+border-color: #333;</string>
+     </property>
      <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
+      <enum>QFrame::NoFrame</enum>
      </property>
      <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="lineWidth">
+      <number>0</number>
      </property>
      <layout class="QVBoxLayout" name="verticalLayoutCoinControl2">
       <property name="spacing">
@@ -64,6 +74,9 @@
         <property name="topMargin">
          <number>10</number>
         </property>
+        <property name="bottomMargin">
+         <number>5</number>
+        </property>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayoutCoinControl1">
           <property name="bottomMargin">
@@ -79,7 +92,7 @@
             </property>
             <property name="font">
              <font>
-              <family>Copperplate Gothic Light</family>
+              <family>Ubuntu</family>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -116,7 +129,7 @@
            <widget class="QLabel" name="labelCoinControlAutomaticallySelected">
             <property name="font">
              <font>
-              <family>Copperplate Gothic Light</family>
+              <family>Ubuntu</family>
              </font>
             </property>
             <property name="styleSheet">
@@ -226,7 +239,7 @@
                 <widget class="QLabel" name="labelCoinControlQuantityText">
                  <property name="font">
                   <font>
-                   <family>Copperplate Gothic Light</family>
+                   <family>Ubuntu</family>
                    <weight>75</weight>
                    <bold>true</bold>
                   </font>
@@ -246,7 +259,7 @@
                 <widget class="QLabel" name="labelCoinControlQuantity">
                  <property name="font">
                   <font>
-                   <family>Copperplate Gothic Light</family>
+                   <family>Ubuntu</family>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
@@ -274,7 +287,7 @@
                 <widget class="QLabel" name="labelCoinControlBytesText">
                  <property name="font">
                   <font>
-                   <family>Copperplate Gothic Light</family>
+                   <family>Ubuntu</family>
                    <weight>75</weight>
                    <bold>true</bold>
                   </font>
@@ -291,7 +304,7 @@
                 <widget class="QLabel" name="labelCoinControlBytes">
                  <property name="font">
                   <font>
-                   <family>Copperplate Gothic Light</family>
+                   <family>Ubuntu</family>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
@@ -335,7 +348,7 @@
                 <widget class="QLabel" name="labelCoinControlAmountText">
                  <property name="font">
                   <font>
-                   <family>Copperplate Gothic Light</family>
+                   <family>Ubuntu</family>
                    <weight>75</weight>
                    <bold>true</bold>
                   </font>
@@ -355,7 +368,7 @@
                 <widget class="QLabel" name="labelCoinControlAmount">
                  <property name="font">
                   <font>
-                   <family>Copperplate Gothic Light</family>
+                   <family>Ubuntu</family>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
@@ -380,7 +393,7 @@
                 <widget class="QLabel" name="labelCoinControlPriorityText">
                  <property name="font">
                   <font>
-                   <family>Copperplate Gothic Light</family>
+                   <family>Ubuntu</family>
                    <weight>75</weight>
                    <bold>true</bold>
                   </font>
@@ -397,7 +410,7 @@
                 <widget class="QLabel" name="labelCoinControlPriority">
                  <property name="font">
                   <font>
-                   <family>Copperplate Gothic Light</family>
+                   <family>Ubuntu</family>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
@@ -441,7 +454,7 @@
                 <widget class="QLabel" name="labelCoinControlFeeText">
                  <property name="font">
                   <font>
-                   <family>Copperplate Gothic Light</family>
+                   <family>Ubuntu</family>
                    <weight>75</weight>
                    <bold>true</bold>
                   </font>
@@ -461,7 +474,7 @@
                 <widget class="QLabel" name="labelCoinControlFee">
                  <property name="font">
                   <font>
-                   <family>Copperplate Gothic Light</family>
+                   <family>Ubuntu</family>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
@@ -486,7 +499,7 @@
                 <widget class="QLabel" name="labelCoinControlLowOutputText">
                  <property name="font">
                   <font>
-                   <family>Copperplate Gothic Light</family>
+                   <family>Ubuntu</family>
                    <weight>75</weight>
                    <bold>true</bold>
                   </font>
@@ -503,7 +516,7 @@
                 <widget class="QLabel" name="labelCoinControlLowOutput">
                  <property name="font">
                   <font>
-                   <family>Monospace</family>
+                   <family>Ubuntu</family>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
@@ -547,7 +560,7 @@
                 <widget class="QLabel" name="labelCoinControlAfterFeeText">
                  <property name="font">
                   <font>
-                   <family>Copperplate Gothic Light</family>
+                   <family>Ubuntu</family>
                    <weight>75</weight>
                    <bold>true</bold>
                   </font>
@@ -567,7 +580,7 @@
                 <widget class="QLabel" name="labelCoinControlAfterFee">
                  <property name="font">
                   <font>
-                   <family>Copperplate Gothic Light</family>
+                   <family>Ubuntu</family>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
@@ -592,7 +605,7 @@
                 <widget class="QLabel" name="labelCoinControlChangeText">
                  <property name="font">
                   <font>
-                   <family>Copperplate Gothic Light</family>
+                   <family>Ubuntu</family>
                    <weight>75</weight>
                    <bold>true</bold>
                   </font>
@@ -609,7 +622,7 @@
                 <widget class="QLabel" name="labelCoinControlChange">
                  <property name="font">
                   <font>
-                   <family>Copperplate Gothic Light</family>
+                   <family>Ubuntu</family>
                    <pointsize>10</pointsize>
                   </font>
                  </property>
@@ -638,7 +651,7 @@
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayoutCoinControl4" stretch="0,0,0">
+         <layout class="QHBoxLayout" name="horizontalLayoutCoinControl4" stretch="0,0,0,0,0,0,0">
           <property name="spacing">
            <number>12</number>
           </property>
@@ -651,63 +664,63 @@
           <property name="rightMargin">
            <number>5</number>
           </property>
-		  <item>
-            <widget class="QCheckBox" name="splitBlockCheckBox">
-              <property name="text">
-                <string>SplitBlock</string>
-              </property>
-            </widget>
+          <item>
+           <widget class="QCheckBox" name="splitBlockCheckBox">
+            <property name="text">
+             <string>SplitBlock</string>
+            </property>
+           </widget>
           </item>
           <item>
-            <widget class="QLineEdit" name="splitBlockLineEdit">
-              <property name="enabled">
-                <bool>false</bool>
-              </property>
-              <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                </sizepolicy>
-              </property>
-              <property name="maximumSize">
-                <size>
-                  <width>100</width>
-                  <height>16777215</height>
-                </size>
-              </property>
-            </widget>
+           <widget class="QLineEdit" name="splitBlockLineEdit">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
           </item>
           <item>
-            <widget class="QLabel" name="labelBlockSizeText">
-              <property name="enabled">
-                <bool>false</bool>
-              </property>
-              <property name="font">
-                <font>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                </font>
-              </property>
-              <property name="text">
-                <string>Block Size:</string>
-              </property>
-            </widget>
+           <widget class="QLabel" name="labelBlockSizeText">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Block Size:</string>
+            </property>
+           </widget>
           </item>
           <item>
-            <widget class="QLabel" name="labelBlockSize">
-              <property name="enabled">
-                <bool>false</bool>
-              </property>
-              <property name="text">
-                <string>0.00 MONK</string>
-              </property>
-            </widget>
+           <widget class="QLabel" name="labelBlockSize">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>0.00 MONK</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QCheckBox" name="checkBoxCoinControlChange">
             <property name="font">
              <font>
-              <family>Copperplate Gothic Light</family>
+              <family>Ubuntu</family>
              </font>
             </property>
             <property name="styleSheet">
@@ -775,6 +788,15 @@
    </item>
    <item>
     <widget class="QScrollArea" name="scrollArea">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="lineWidth">
+      <number>0</number>
+     </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
@@ -784,7 +806,7 @@
         <x>0</x>
         <y>0</y>
         <width>830</width>
-        <height>175</height>
+        <height>149</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -884,11 +906,11 @@
          </property>
          <property name="font">
           <font>
-           <family>Copperplate Gothic Light</family>
+           <family>Ubuntu</family>
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">QLabel { color: #000000; border: none;}</string>
+          <string notr="true">QLabel { color: #fff; border: none;}</string>
          </property>
          <property name="text">
           <string>Balance:</string>
@@ -905,14 +927,14 @@
          </property>
          <property name="font">
           <font>
-           <family>Copperplate Gothic Light</family>
+           <family>Ubuntu</family>
           </font>
          </property>
          <property name="cursor">
           <cursorShape>IBeamCursor</cursorShape>
          </property>
          <property name="styleSheet">
-          <string notr="true">QLabel { color: #000000; border: none;}</string>
+          <string notr="true">QLabel { color: #ffffff; border: none;}</string>
          </property>
          <property name="text">
           <string>123.456 MONK</string>
